@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+#cmake_minimum_required(VERSION 2.8)
 project(ORB_SLAM3)
 
 IF(NOT CMAKE_BUILD_TYPE)
@@ -36,7 +36,10 @@ find_package(OpenCV 4.4)
    endif()
 
 find_package(OpenSSL REQUIRED)
+find_package( Boost 1.30 COMPONENTS program_options serialization REQUIRED )
+link_directories(${Boost_LIBRARY_DIRS})
 
+MESSAGE(STATUS "  Boost lib dirs: ${Boost_LIBRARY_DIRS}" )
 
 MESSAGE("OPENCV VERSION:")
 MESSAGE(${OpenCV_VERSION})
@@ -44,6 +47,7 @@ MESSAGE(${OpenCV_VERSION})
 find_package(Eigen3 3.1.0 REQUIRED)
 find_package(Pangolin REQUIRED)
 find_package(realsense2)
+find_package( Boost 1.30 COMPONENTS program_options REQUIRED )
 
 include_directories(
 ${PROJECT_SOURCE_DIR}
@@ -123,6 +127,7 @@ target_link_libraries(${PROJECT_NAME}
 ${OpenCV_LIBS}
 ${EIGEN3_LIBS}
 ${Pangolin_LIBRARIES}
+${Boost_LIBRARIES}
 ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
 ${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
 -lboost_serialization
